@@ -1,9 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ApolloClient,ApolloProvider, InMemoryCache} from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import App from './App.tsx'
 import './index.css'
 import { relayStylePagination } from '@apollo/client/utilities';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux'
+import { store } from './redux/store.ts';
 
 
 const client = new ApolloClient({
@@ -12,22 +15,26 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          // Reusable helper function to generate a field
-          // policy for the Query.search field, keyed by
-          // search query:
           search: relayStylePagination(['query']),
         },
       },
     },
   }),
   headers: {
-    Authorization: `Bearer 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`
+    Authorization: `Bearer ${import.meta.env.VITE_API_KEY}`
   }
 });
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <ApolloProvider client={client}>
-<App />
-  </ApolloProvider>
-    
-  
+  <BrowserRouter>
+    <Provider store={store}>
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
+    </Provider>
+
+  </BrowserRouter>
+
+
+
 )
