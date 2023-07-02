@@ -6,7 +6,8 @@ import './index.css'
 import { relayStylePagination } from '@apollo/client/utilities';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
-import { store } from './redux/store.ts';
+import { persistore, store } from './redux/store.ts';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 const client = new ApolloClient({
@@ -29,7 +30,10 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>
       <ApolloProvider client={client}>
-        <App />
+        <PersistGate loading={null} persistor={persistore}>
+          <App />
+        </PersistGate>
+        
       </ApolloProvider>
     </Provider>
 

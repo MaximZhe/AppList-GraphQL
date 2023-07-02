@@ -4,8 +4,8 @@ import { useQuery } from '@apollo/client'
 import { getPageCount, getPagesArray} from '../utils/pagesCount.tsx';
 import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setDatas, setOneRepoName, setOneRepoOwner } from '../features/datas/datasSlice.tsx';
-import { setCurrentPage } from '../redux/slice/paginationSlice.tsx';
+import { setDatas, setOneRepoName, setOneRepoOwner, setSingleRepoData } from '../redux/slice/datasSlice.tsx';
+
 
 
 
@@ -26,18 +26,12 @@ function AppList() {
 
   const pageArray = getPagesArray(totalPages)
   
-  const handleLinkClick = (name:string,owner:string) => {
+  const handleLinkClick = (name:string,owner:string, data:[]) => {
     dispatch(setOneRepoOwner(owner));
     dispatch(setOneRepoName(name));
+    dispatch(setSingleRepoData(data))
   };
- 
-    // const currentPage = useSelector((state:any) => state.pagination.currentPage);
-  
-  
-    
-  
- 
-  
+
   const dat = useSelector((state:any) => state.datas.datas)
   if(data){
     console.log(dat)
@@ -81,10 +75,10 @@ function AppList() {
       </div>
 
       {loading ? (<p>Loading...</p>) : (
-        data.search.edges.slice((currentPage - 1) * limit, currentPage * limit).map((data:any, index:number) =>
+        dat.slice((currentPage - 1) * limit, currentPage * limit).map((data:any, index:number) =>
         <ul key={data.node.id}>
         <li>{index + ((currentPage - 1) * limit)} 
-        <Link to={`/repos/${data.node.id}`} onClick={() => handleLinkClick(data.node.name, data.node.owner.login)}>Name: {data.node.name}</Link>
+        <Link to={`/repos/${data.node.id}`} onClick={() => handleLinkClick(data.node.name, data.node.owner.login, data)}>Name: {data.node.name}</Link>
         </li>
         {/* <li>Link:<a href={data.node.url}>Ссылка</a></li>
         <li>Stars GitHub:{data.node.stargazers.totalCount}</li>

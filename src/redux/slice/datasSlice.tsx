@@ -5,14 +5,16 @@ interface IState {
     oneRepo: {
         owner:string,
         name: string
-    }
+    },
+    singleRepoData: []
 }
 const initialState: IState = {
     datas: [],
     oneRepo: {
         owner:'',
         name:''
-    }
+    },
+    singleRepoData: []
 }
 
 export const datasSlice = createSlice({
@@ -27,9 +29,12 @@ export const datasSlice = createSlice({
         },
         setOneRepoName:(state, action) => {
             state.oneRepo.name = action.payload
+        },
+        setSingleRepoData:(state, action) => {
+            state.singleRepoData = action.payload
         }
     }
 })
 
-export const {setDatas, setOneRepoOwner,setOneRepoName} = datasSlice.actions
+export const {setDatas, setOneRepoOwner,setOneRepoName,setSingleRepoData} = datasSlice.actions
 export default datasSlice.reducer
