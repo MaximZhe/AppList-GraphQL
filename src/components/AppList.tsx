@@ -27,7 +27,7 @@ function AppList() {
 
   const pageArray = getPagesArray(totalPages)
 
-  
+
 
   const dat = useSelector((state: any) => state.datas.datas)
   if (data) {
@@ -69,24 +69,28 @@ function AppList() {
         <input className='search__input' type='text' value={nameRepo} onChange={(e) => setNameRepo(e.target.value)} />
         <button className='search__btn' type='button' > Search</button>
       </div>
+      <div className='items'>
+        {loading ? (<p>Loading...</p>) : (
+          dat.slice((currentPage - 1) * limit, currentPage * limit).map((data: any, index: number) =>
 
-      {loading ? (<p>Loading...</p>) : (
-        dat.slice((currentPage - 1) * limit, currentPage * limit).map((data: any, index: number) =>
-            
-            <SingleRepo key={data.node.id} data={data} index={index} currentPage={currentPage} limit={limit}/>
-    
-        )
-      )}
-      {loading ? ( null ) : (
-        pageArray.map((pageNumber: number) =>
-          <button
-            key={pageNumber} className={currentPage === pageNumber ? 'active' : ''}
-            onClick={() => setCurrentPage(pageNumber)}
-          >
-            {pageNumber}
-          </button>
-        )
-      )}
+            <SingleRepo key={data.node.id} data={data} />
+
+          )
+        )}
+      </div>
+      <div className='pagination'>
+        {loading ? (null) : (
+          pageArray.map((pageNumber: number) =>
+            <button
+              key={pageNumber} className={currentPage === pageNumber ? 'active' : ''}
+              onClick={() => setCurrentPage(pageNumber)}
+            >
+              {pageNumber}
+            </button>
+          )
+        )}
+      </div>
+
     </>
   )
 }
