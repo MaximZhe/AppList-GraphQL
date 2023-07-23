@@ -4,7 +4,7 @@ import AppRoute from './components/AppRoute.tsx';
 function App() {
   
   return (
-      <div>
+      <div className='container'>
       
       <AppRoute/>
     
