@@ -1,6 +1,6 @@
 
 import './App.css'
-import AppRoute from './components/AppRoute.tsx';
+import AppRoute from './components/AppRoute/AppRoute.tsx';
 function App() {
   
   return (

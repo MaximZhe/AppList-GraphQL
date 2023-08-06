@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import { GET_REPOSITORIES } from '../query/query'
+import { GET_REPOSITORIES } from '../../query/query.tsx'
 import { useQuery } from '@apollo/client'
-import { getPageCount, getPagesArray } from '../utils/pagesCount.tsx';
-import { Link } from 'react-router-dom';
+import { getPageCount, getPagesArray } from '../../utils/pagesCount.tsx';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { setDatas, setSingleRepoData } from '../redux/slice/datasSlice.tsx';
+import { setDatas, setSingleRepoData } from '../../redux/slice/datasSlice.tsx';
 import './applist.scss'
-import '../index.css'
-import SingleRepo from './SingleRepo.tsx';
+import '../../index.css'
+import ItemAppList from '../ItemAppList/ItemAppList.tsx';
 
 
 function AppList() {
@@ -73,7 +73,7 @@ function AppList() {
         {loading ? (<p>Loading...</p>) : (
           dat.slice((currentPage - 1) * limit, currentPage * limit).map((data: any, index: number) =>
 
-            <SingleRepo key={data.node.id} data={data} />
+            <ItemAppList key={data.node.id} data={data} />
 
           )
         )}

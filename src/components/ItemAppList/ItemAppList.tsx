@@ -1,12 +1,11 @@
 import React from 'react';
-import moment from "moment";
 import { Link } from 'react-router-dom';
-import { setSingleRepoData } from '../redux/slice/datasSlice';
+import { setSingleRepoData } from '../../redux/slice/datasSlice';
 import { useDispatch } from 'react-redux';
-import './singlerepo.scss';
-import star from "../assets/icons/star-rating.svg"
-import { formatDate } from '../utils/formatData';
-const SingleRepo = ({data}:{data:any}) => {
+import './ItemAppList.scss';
+import star from "../../assets/icons/star-rating.svg"
+import { formatDate } from '../../utils/formatData';
+const ItemAppList = ({data}:{data:any}) => {
     const dispatch = useDispatch()
     const handleLinkClick = (data: []) => {
 
@@ -32,4 +31,4 @@ const SingleRepo = ({data}:{data:any}) => {
     );
 };
 
-export default SingleRepo;
+export default ItemAppList;

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import SingleCardRepo from './SingleCardRepo';
-import AppList from './AppList';
+import CardRepository from '../CardRepository/CardRepository';
+import AppList from '../AppList/AppList';
 const AppRoute = () => {
     return (
         <Routes>
-        <Route index path="/repos/:id" element={<SingleCardRepo  />} />
+        <Route index path="/repos/:id" element={<CardRepository  />} />
         <Route path="/" element={<AppList />}/>
       </Routes>
       )
