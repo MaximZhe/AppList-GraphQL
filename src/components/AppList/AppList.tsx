@@ -19,15 +19,13 @@ function AppList() {
 
   const [currentPage, setCurrentPage] = useState(parseInt(localStorage.getItem('currentPage')!) || 1)
   const [totalPages, setTotalPages] = useState(0)
-  const { data, loading, error } = useQuery(GET_REPOSITORIES, {
+  const { data, loading} = useQuery(GET_REPOSITORIES, {
     variables: { name: nameRepo, first: first, after: after }
     
   })
 console.log(data)
   const pageArray = getPagesArray(totalPages)
   const datasRepo = useAppSelector((state) => state.datas.datas)
-  console.log(nameRepo)
-  console.log(datasRepo)
   useEffect(() => {
     if (nameRepo === '') {
       setCurrentPage(1)
