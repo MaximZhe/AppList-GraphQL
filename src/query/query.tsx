@@ -35,22 +35,3 @@ export const GET_REPOSITORIES = gql`
   `;
 
 
-export const GET_REPOSITORIES2 = gql`
-  query GetRepository($owner: String!, $name: String!) {
-    repository(owner: $owner, name: $name) {
-      id
-      name
-      description
-      stargazerCount
-      forkCount
-      primaryLanguage {
-        name
-      }
-      owner {
-        login
-        avatarUrl
-      }
-    }
-  }
-  `;
-

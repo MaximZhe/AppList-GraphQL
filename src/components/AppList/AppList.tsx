@@ -3,22 +3,21 @@ import { GET_REPOSITORIES } from '../../query/query.tsx'
 import { useQuery } from '@apollo/client'
 import { getPageCount, getPagesArray } from '../../utils/pagesCount.tsx';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setDatas, setSingleRepoData } from '../../redux/slice/datasSlice.tsx';
+import { setDatas } from '../../redux/slice/datasSlice.tsx';
 import './applist.scss'
 import '../../index.css'
 import ItemAppList from '../ItemAppList/ItemAppList.tsx';
-
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
+import { ICardRepositoryProps } from "../../types/types";
 
 function AppList() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const limit = 10;
 
   const [nameRepo, setNameRepo] = useState(localStorage.getItem('nameRepo') || '')
   const [first, setFirst] = useState(100)
   const [after, setAfter] = useState()
   const [currentPage, setCurrentPage] = useState(parseInt(localStorage.getItem('currentPage')!) || 1)
-  const [totalCount, setTotalCount] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
   const { data, loading, error } = useQuery(GET_REPOSITORIES, {
     variables: { name: nameRepo, first: first, after: after }
@@ -26,37 +25,28 @@ function AppList() {
   })
 
   const pageArray = getPagesArray(totalPages)
+  const datas = useAppSelector((state) => state.datas.datas)
 
+  function getDataRepository() {
+    if (data !== undefined) {
+      const totalRepo = data.search.edges
+      dispatch(setDatas(totalRepo))
+      const totalCount = data ? data.search.edges.length : 0;
+      setTotalPages(getPageCount(totalCount, limit))
+    } else {
+      return null
+    }
 
-
-  const dat = useSelector((state: any) => state.datas.datas)
-  if (data) {
-    console.log(dat)
   }
   useEffect(() => {
-    function cons() {
-      if (data !== undefined) {
-        const totalRepo = data.search.edges
-        dispatch(setDatas(totalRepo))
-        const totalCount = data ? data.search.edges.length : 0;
-        // setTotalCount(totalRepo.length);
-        setTotalPages(getPageCount(totalCount, limit))
-      } else {
-        return null
-      }
-
-    }
-    cons()
-
-
-    console.log(totalPages)
     if (nameRepo === '') {
       setCurrentPage(1)
     } else {
-      setCurrentPage(parseInt(localStorage.getItem('currentPage')!) || 1)
+      const currentPage = localStorage.getItem('currentPage');
+      setCurrentPage(parseInt(currentPage || '1'));
     }
 
-  }, [data, dispatch, nameRepo, totalPages])
+  }, [nameRepo])
 
   useEffect(() => {
     localStorage.setItem('nameRepo', nameRepo);
@@ -65,16 +55,15 @@ function AppList() {
 
   return (
     <>
-      <div className='search' style={{ display: 'flex', justifyContent: 'space-between' }}>
+      {error ? (console.log(error)) : null}
+      <div className='search'>
         <input className='search__input' type='text' value={nameRepo} onChange={(e) => setNameRepo(e.target.value)} />
-        <button className='search__btn' type='button' > Search</button>
+        <button className='search__btn' type='button' onClick={getDataRepository}> Search</button>
       </div>
       <div className='items'>
         {loading ? (<p>Loading...</p>) : (
-          dat.slice((currentPage - 1) * limit, currentPage * limit).map((data: any, index: number) =>
-
+          datas.slice((currentPage - 1) * limit, currentPage * limit).map((data: ICardRepositoryProps) =>
             <ItemAppList key={data.node.id} data={data} />
-
           )
         )}
       </div>
@@ -90,7 +79,6 @@ function AppList() {
           )
         )}
       </div>
-
     </>
   )
 }
