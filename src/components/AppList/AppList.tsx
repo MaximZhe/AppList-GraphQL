@@ -13,10 +13,10 @@ import { ICardRepositoryProps } from "../../types/types";
 function AppList() {
   const dispatch = useAppDispatch()
   const limit = 10;
-  
+  const first = 100;
+  const after = '';
   const [nameRepo, setNameRepo] = useState(localStorage.getItem('nameRepo') || '')
-  const [first, setFirst] = useState(100)
-  const [after, setAfter] = useState()
+
   const [currentPage, setCurrentPage] = useState(parseInt(localStorage.getItem('currentPage')!) || 1)
   const [totalPages, setTotalPages] = useState(0)
   const { data, loading, error } = useQuery(GET_REPOSITORIES, {
