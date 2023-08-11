@@ -13,40 +13,42 @@ import { ICardRepositoryProps } from "../../types/types";
 function AppList() {
   const dispatch = useAppDispatch()
   const limit = 10;
-  const first = 100;
-  const after = '';
+  const [first] = useState (100);
+  const [after] = useState();
   const [nameRepo, setNameRepo] = useState(localStorage.getItem('nameRepo') || '')
 
   const [currentPage, setCurrentPage] = useState(parseInt(localStorage.getItem('currentPage')!) || 1)
   const [totalPages, setTotalPages] = useState(0)
   const { data, loading, error } = useQuery(GET_REPOSITORIES, {
     variables: { name: nameRepo, first: first, after: after }
-
+    
   })
-
+console.log(data)
   const pageArray = getPagesArray(totalPages)
-  const datas = useAppSelector((state) => state.datas.datas)
-
-  function getDataRepository() {
-    if (data !== undefined) {
-      const totalRepo = data.search.edges
-      dispatch(setDatas(totalRepo))
-      const totalCount = data ? data.search.edges.length : 0;
-      setTotalPages(getPageCount(totalCount, limit))
-    } else {
-      return null
-    }
-
-  }
+  const datasRepo = useAppSelector((state) => state.datas.datas)
+  console.log(nameRepo)
+  console.log(datasRepo)
   useEffect(() => {
     if (nameRepo === '') {
       setCurrentPage(1)
     } else {
-      const currentPage = localStorage.getItem('currentPage');
-      setCurrentPage(parseInt(currentPage || '1'));
+      setCurrentPage(parseInt(localStorage.getItem('currentPage')!) || 1);
     }
 
-  }, [nameRepo])
+    function getDataRepository() {
+      if (data !== undefined) {
+        const totalRepo = data.search.edges
+        dispatch(setDatas(totalRepo))
+        console.log(totalRepo)
+        const totalCount = data ? data.search.edges.length : 0;
+        setTotalPages(getPageCount(totalCount, limit))
+      } else {
+        return null
+      }
+  
+    }
+    getDataRepository();
+  }, [data, dispatch, nameRepo])
 
   useEffect(() => {
     localStorage.setItem('nameRepo', nameRepo);
@@ -55,14 +57,13 @@ function AppList() {
 
   return (
     <>
-      {error ? (console.log(error)) : null}
+
       <div className='search'>
-        <input className='search__input' type='text' value={nameRepo} onChange={(e) => setNameRepo(e.target.value)} />
-        <button className='search__btn' type='button' onClick={getDataRepository}> Search</button>
+        <input placeholder='Введите название' className='search__input' type='text' value={nameRepo} onChange={(e) => setNameRepo(e.target.value)} />
       </div>
       <div className='items'>
-        {loading ? (<p>Loading...</p>) : (
-          datas.slice((currentPage - 1) * limit, currentPage * limit).map((data: ICardRepositoryProps) =>
+        {loading ? (<p className='items__loader'>Loading...</p>) : (
+          datasRepo.slice((currentPage - 1) * limit, currentPage * limit).map((data: ICardRepositoryProps) =>
             <ItemAppList key={data.node.id} data={data} />
           )
         )}
