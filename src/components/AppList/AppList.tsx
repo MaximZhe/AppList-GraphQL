@@ -13,7 +13,7 @@ import { ICardRepositoryProps } from "../../types/types";
 function AppList() {
   const dispatch = useAppDispatch()
   const limit = 10;
-
+  
   const [nameRepo, setNameRepo] = useState(localStorage.getItem('nameRepo') || '')
   const [first, setFirst] = useState(100)
   const [after, setAfter] = useState()
