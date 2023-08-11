@@ -5,8 +5,8 @@ import AppList from '../AppList/AppList';
 const AppRoute = () => {
     return (
         <Routes>
-        <Route index path="/repos/:id" element={<CardRepository  />} />
-        <Route path="/" element={<AppList />}/>
+        <Route index path={`${process.env.PUBLIC_URL}/repos/:id`} element={<CardRepository  />} />
+        <Route path={`${process.env.PUBLIC_URL}/`} element={<AppList />}/>
       </Routes>
       )
 };
