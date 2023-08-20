@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import { persistore, store } from './redux/store.ts';
 import { PersistGate } from 'redux-persist/integration/react';
 
-const MY_TOKEN = process.env.MY_TOKEN;
+const MY_TOKEN = process.env.VITE_API_KEY;
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
   cache: new InMemoryCache({
