@@ -10,7 +10,7 @@ const AppRoute = () => {
         <Route index path='/repos/:id' element={<CardRepository  />} />
         
         <Route path='/AppList-GraphQL/' element={<Authorization />}/>
-        <Route path='/AppList-GraphQL/callback/' element={<Callback />}/>
+        <Route index path='/callback/' element={<Callback />}/>
       </Routes>
       )
 };
