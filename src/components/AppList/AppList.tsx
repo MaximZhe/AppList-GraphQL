@@ -33,6 +33,8 @@ console.log(data)
       setCurrentPage(parseInt(localStorage.getItem('currentPage')!) || 1);
     }
 
+    
+
     function getDataRepository() {
       if (data !== undefined) {
         const totalRepo = data.search.edges
@@ -48,6 +50,8 @@ console.log(data)
     getDataRepository();
   }, [data, dispatch, nameRepo])
 
+
+  
   useEffect(() => {
     localStorage.setItem('nameRepo', nameRepo);
     localStorage.setItem('currentPage', currentPage.toString());

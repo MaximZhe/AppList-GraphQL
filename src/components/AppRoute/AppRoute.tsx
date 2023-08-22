@@ -2,11 +2,15 @@
 import { Route, Routes } from 'react-router-dom';
 import CardRepository from '../CardRepository/CardRepository';
 import AppList from '../AppList/AppList';
+import Authorization from '../Authorization/Authorization';
+import Callback from '../Callback';
 const AppRoute = () => {
     return (
         <Routes>
         <Route index path='/repos/:id' element={<CardRepository  />} />
-        <Route path='/AppList-GraphQL/' element={<AppList />}/>
+        
+        <Route path='/AppList-GraphQL/' element={<Authorization />}/>
+        <Route path='/callback' element={<Callback />}/>
       </Routes>
       )
 };
