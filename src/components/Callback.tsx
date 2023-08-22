@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import axios from 'axios'
 function Callback() {
-    const clientID = import.meta.env.VITE_API_ID
-    const clientSECRET = import.meta.env.VITE_API_SECRET
+    const clientID = 'a6deca3ab58b7d8c1202'
+    const clientSECRET = 'a0f99e475af301984866e440c4e5ff3ddd1a28f3'
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -10,8 +10,8 @@ function Callback() {
             const fetchData = async () => {
                 try {
                   const datas = {
-                    client_id: `${clientID}`,
-                    client_secret: `${clientSECRET}`,
+                    client_id: clientID,
+                    client_secret: clientSECRET,
                     code: `${code}`,
                     redirect_uri:'http://localhost:5173/callback'
                   };

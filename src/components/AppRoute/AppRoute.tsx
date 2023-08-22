@@ -1,7 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom';
 import CardRepository from '../CardRepository/CardRepository';
-import AppList from '../AppList/AppList';
+
 import Authorization from '../Authorization/Authorization';
 import Callback from '../Callback';
 const AppRoute = () => {
