@@ -12,7 +12,7 @@ function Callback() {
                   const datas = {
                     client_id: clientID,
                     client_secret: clientSECRET,
-                    code: `${code}`,
+                    code: code,
                     redirect_uri:'https://maximzhe.github.io/AppList-GraphQL/callback'
                   };
           

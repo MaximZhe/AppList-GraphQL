@@ -8,9 +8,9 @@ const AppRoute = () => {
     return (
         <Routes>
         <Route index path='/repos/:id' element={<CardRepository  />} />
-        
+        <Route path='/callback?/*' element={<Callback />}/>
         <Route path='/AppList-GraphQL/' element={<Authorization />}/>
-        <Route index path='/callback/' element={<Callback />}/>
+        
       </Routes>
       )
 };
