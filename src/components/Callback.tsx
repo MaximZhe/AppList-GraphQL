@@ -13,7 +13,6 @@ function Callback() {
                     client_id: clientID,
                     client_secret: clientSECRET,
                     code: code,
-                    redirect_uri:'https://maximzhe.github.io/AppList-GraphQL/callback'
                   };
           
                   const response = await axios.post('https://github.com/login/oauth/access_token',
